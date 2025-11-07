@@ -20,8 +20,8 @@ Inspired by [Terminal Shop](https://github.com/charmbracelet/ssh-apps), this pro
 
 ```bash
 # Clone the repository
-git clone https://github.com/pcstyle/ssh-server.git
-cd ssh-server
+git clone https://github.com/pc-style/pcstyledev-ssh.git
+cd pcstyledev-ssh
 
 # Build the server
 go build -o bin/ssh-server ./cmd/server
@@ -309,7 +309,7 @@ Contributions are welcome! Please feel free to submit pull requests or open issu
 
 - **Website**: https://pcstyle.dev
 - **SSH**: `ssh ssh.pcstyle.dev` (when deployed)
-- **GitHub**: https://github.com/pcstyle/ssh-server
+- **GitHub**: https://github.com/pc-style/pcstyledev-ssh
 
 ---
 

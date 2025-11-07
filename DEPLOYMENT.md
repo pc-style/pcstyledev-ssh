@@ -103,7 +103,7 @@ gcloud compute ssh ssh-server --zone=us-central1-a
 # Clone your repository
 cd ~
 git clone https://github.com/pc-style/pcstyledev-ssh.git
-cd ssh-server
+cd pcstyledev-ssh
 
 # Build Docker image
 docker build -t ssh-server .
@@ -165,7 +165,7 @@ Requires=docker.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-WorkingDirectory=/home/YOUR_USERNAME/ssh-server
+WorkingDirectory=/home/YOUR_USERNAME/pcstyledev-ssh
 ExecStart=/usr/bin/docker start ssh-server || /usr/bin/docker run -d --name ssh-server --restart unless-stopped -p 22:2222 ssh-server
 ExecStop=/usr/bin/docker stop ssh-server
 
@@ -196,7 +196,7 @@ sudo systemctl status ssh-server
 gcloud compute ssh ssh-server --zone=us-central1-a
 
 # Pull latest changes
-cd ~/ssh-server
+cd ~/pcstyledev-ssh
 git pull
 
 # Rebuild image
@@ -224,7 +224,7 @@ docker image prune -f
 
 ```bash
 # Update code
-cd ~/ssh-server && git pull && docker build -t ssh-server .
+cd ~/pcstyledev-ssh && git pull && docker build -t ssh-server .
 
 # Restart service (handles container restart automatically)
 sudo systemctl restart ssh-server
@@ -321,7 +321,7 @@ echo "Updating system packages..."
 sudo apt-get update && sudo apt-get upgrade -y
 
 echo "Updating SSH server..."
-cd ~/ssh-server
+cd ~/pcstyledev-ssh
 git pull
 docker build -t ssh-server .
 sudo systemctl restart ssh-server
@@ -348,9 +348,9 @@ docker cp ssh-server:/app/.ssh ~/backups/ssh-keys-$(date +%Y%m%d)
 
 # Or backup from host
 tar -czf ~/backups/ssh-server-backup-$(date +%Y%m%d).tar.gz \
-  ~/ssh-server/.ssh \
-  ~/ssh-server/go.mod \
-  ~/ssh-server/Dockerfile
+  ~/pcstyledev-ssh/.ssh \
+  ~/pcstyledev-ssh/go.mod \
+  ~/pcstyledev-ssh/Dockerfile
 ```
 
 ### 4. Firewall Configuration
@@ -440,7 +440,7 @@ docker logs ssh-server
 sudo systemctl status docker
 
 # Rebuild image
-cd ~/ssh-server
+cd ~/pcstyledev-ssh
 docker build --no-cache -t ssh-server .
 
 # Remove old container and start fresh

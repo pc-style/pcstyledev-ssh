@@ -15,7 +15,7 @@ import (
 	"github.com/charmbracelet/wish"
 	"github.com/charmbracelet/wish/bubbletea"
 	"github.com/charmbracelet/wish/logging"
-	"github.com/pc-style/pcstyledev-ssh/internal/ui"
+	"github.com/pcstyle/ssh-server/internal/ui"
 )
 
 // Config holds the server configuration

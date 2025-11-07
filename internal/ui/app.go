@@ -208,7 +208,7 @@ func AboutView() string {
 	b.WriteString("\n")
 	b.WriteString(HelpStyle.Render("Built with Go + Charm (Wish, Bubble Tea, Lip Gloss)"))
 	b.WriteString("\n")
-	b.WriteString(HelpStyle.Render("Source: github.com/pcstyle/ssh-server"))
+	b.WriteString(HelpStyle.Render("Source: github.com/pc-style/pcstyledev-ssh"))
 	b.WriteString("\n\n")
 	b.WriteString(HelpStyle.Render("Press Enter or Esc to go back"))
 
