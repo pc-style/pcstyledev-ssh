@@ -1,16 +1,14 @@
 #!/bin/bash
-# Step 8: Set up systemd service
-# Run this script ON THE VM
-# Usage: ./scripts/08-setup-systemd.sh
+# Quick fix for broken systemd service
+# Run this script ON THE VM to fix the existing service
+# Usage: ./scripts/fix-systemd-service.sh
 
 set -e
 
 REPO_DIR="${HOME}/pcstyledev-ssh"
-USERNAME=$(whoami)
 
 if [ ! -d "$REPO_DIR" ]; then
     echo "Error: Repository not found at $REPO_DIR"
-    echo "Make sure Step 5 completed successfully."
     exit 1
 fi
 
@@ -26,7 +24,7 @@ SCRIPT
 
 sudo chmod +x /usr/local/bin/ssh-server-start.sh
 
-echo "Creating systemd service file..."
+echo "Updating systemd service file..."
 sudo tee /etc/systemd/system/ssh-server.service > /dev/null <<EOF
 [Unit]
 Description=SSH Terminal Server
@@ -47,20 +45,13 @@ EOF
 echo "Reloading systemd daemon..."
 sudo systemctl daemon-reload
 
-echo "Enabling service..."
-sudo systemctl enable ssh-server
-
-echo "Starting service..."
-sudo systemctl start ssh-server
+echo "Restarting service..."
+sudo systemctl restart ssh-server
 
 echo "Checking service status..."
+sleep 2
 sudo systemctl status ssh-server --no-pager || true
 
 echo ""
-echo "✅ Systemd service configured!"
-echo ""
-echo "Useful commands:"
-echo "  Check status: sudo systemctl status ssh-server"
-echo "  View logs: sudo journalctl -u ssh-server -f"
-echo "  Restart: sudo systemctl restart ssh-server"
+echo "✅ Service fixed!"
 
