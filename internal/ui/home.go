@@ -198,15 +198,15 @@ func (m HomeModel) View() string {
 		b.WriteString("\n")
 		b.WriteString(HelpStyle.Render("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"))
 		b.WriteString("\n")
-		b.WriteString(HelpStyle.Render("🎮 HIDDEN GAMES 🎮"))
+		b.WriteString(HelpStyle.Render("HIDDEN GAMES"))
 		b.WriteString("\n")
 		
 		hiddenItems := []struct {
 			title string
 			desc  string
 		}{
-			{"🐍 Snake", "Classic snake game"},
-			{"💊 Matrix", "Matrix rain effect"},
+			{"Snake", "Classic snake game"},
+			{"Matrix", "Matrix rain effect"},
 		}
 		
 		for i, item := range hiddenItems {
@@ -235,7 +235,7 @@ func (m HomeModel) View() string {
 	// easter egg hint (very subtle)
 	if !m.hiddenVisible {
 		b.WriteString("\n")
-		b.WriteString(HelpStyle.Render("💡 Tip: Try typing 'snake' or 'matrix'..."))
+		b.WriteString(HelpStyle.Render("Tip: Try typing 'snake' or 'matrix'..."))
 	}
 
 	return BaseStyle.Render(b.String())

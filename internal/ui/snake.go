@@ -232,7 +232,7 @@ func (m SnakeGameModel) View() string {
 	var b strings.Builder
 	
 	// title
-	b.WriteString(TitleStyle.Render("🐍 SNAKE GAME 🐍"))
+	b.WriteString(TitleStyle.Render("SNAKE GAME"))
 	b.WriteString("\n\n")
 	
 	if m.gameOver {
@@ -245,7 +245,7 @@ func (m SnakeGameModel) View() string {
 	}
 	
 	if m.paused {
-		b.WriteString(HelpStyle.Render("⏸ PAUSED - Press Space to resume"))
+		b.WriteString(HelpStyle.Render("PAUSED - Press Space to resume"))
 		b.WriteString("\n\n")
 	}
 	

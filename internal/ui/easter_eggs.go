@@ -47,7 +47,7 @@ func (m HelpEasterEggModel) Update(msg tea.Msg) (HelpEasterEggModel, tea.Cmd) {
 func (m HelpEasterEggModel) View() string {
 	var b strings.Builder
 	
-	b.WriteString(TitleStyle.Render("🎮 EASTER EGGS & SECRETS 🎮"))
+	b.WriteString(TitleStyle.Render("EASTER EGGS & SECRETS"))
 	b.WriteString("\n\n")
 	
 	b.WriteString(LabelStyle.Render("HIDDEN COMMANDS:"))
@@ -70,13 +70,13 @@ func (m HelpEasterEggModel) View() string {
 	
 	b.WriteString(LabelStyle.Render("GAMES:"))
 	b.WriteString("\n")
-	b.WriteString(NavItemStyle.Render("🐍 Snake - Classic arcade game"))
+	b.WriteString(NavItemStyle.Render("Snake - Classic arcade game"))
 	b.WriteString("\n")
 	b.WriteString(NavItemStyle.Render("  Controls: WASD/Arrow keys/HJKL"))
 	b.WriteString("\n")
 	b.WriteString(NavItemStyle.Render("  Space: Pause, R: Restart"))
 	b.WriteString("\n\n")
-	b.WriteString(NavItemStyle.Render("💊 Matrix - Digital rain effect"))
+	b.WriteString(NavItemStyle.Render("Matrix - Digital rain effect"))
 	b.WriteString("\n")
 	b.WriteString(NavItemStyle.Render("  Just watch and enjoy!"))
 	b.WriteString("\n\n")
@@ -142,7 +142,7 @@ func (m KonamiSuccessModel) View() string {
 	art := `
 ╔═══════════════════════════════════════╗
 ║                                       ║
-║     🎉 KONAMI CODE ACTIVATED! 🎉      ║
+║     KONAMI CODE ACTIVATED!             ║
 ║                                       ║
 ║     Hidden features unlocked!         ║
 ║                                       ║

@@ -227,9 +227,9 @@ func (m ContactModel) View() string {
 	// Show submission status
 	if m.submitted {
 		if m.submitSuccess {
-			b.WriteString(SuccessStyle.Render("✓ " + m.submitMessage))
+			b.WriteString(SuccessStyle.Render("[OK] " + m.submitMessage))
 		} else {
-			b.WriteString(ErrorStyle.Render("✗ " + m.submitMessage))
+			b.WriteString(ErrorStyle.Render("[ERROR] " + m.submitMessage))
 		}
 		b.WriteString("\n\n")
 	}
