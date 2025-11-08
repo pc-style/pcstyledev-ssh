@@ -15,6 +15,8 @@ const (
 	ViewHome View = iota
 	ViewContact
 	ViewAbout
+	ViewArcade
+	ViewSecrets
 	ViewExit
 )
 
@@ -23,6 +25,8 @@ type Model struct {
 	currentView  View
 	homeModel    HomeModel
 	contactModel ContactModel
+	arcadeModel  ArcadeModel
+	secretsModel SecretsModel
 	width        int
 	height       int
 	quitting     bool
@@ -37,6 +41,8 @@ func NewModel(apiBaseURL string, renderer *lipgloss.Renderer) Model {
 		currentView:  ViewHome,
 		homeModel:    NewHomeModel(),
 		contactModel: NewContactModel(apiClient),
+		arcadeModel:  NewArcadeModel(),
+		secretsModel: NewSecretsModel(),
 		renderer:     renderer,
 	}
 
@@ -65,15 +71,19 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.height = msg.Height
 
 	case NavigateMsg:
-		// Handle navigation from home screen
-		switch int(msg) {
-		case 0: // Contact
-			m.currentView = ViewContact
-		case 1: // About
-			m.currentView = ViewAbout
-		case 2: // Exit
+		target := msg.Target
+		switch target {
+		case ViewExit:
 			m.quitting = true
 			return m, tea.Quit
+		case ViewArcade:
+			m.currentView = ViewArcade
+			return m, m.arcadeModel.Enter()
+		case ViewSecrets:
+			m.currentView = ViewSecrets
+			return m, m.secretsModel.Enter()
+		default:
+			m.currentView = target
 		}
 		return m, nil
 
@@ -97,6 +107,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.currentView = ViewHome
 			}
 		}
+	case ViewArcade:
+		m.arcadeModel, cmd = m.arcadeModel.Update(msg)
+	case ViewSecrets:
+		m.secretsModel, cmd = m.secretsModel.Update(msg)
 	case ViewExit:
 		m.quitting = true
 		return m, tea.Quit
@@ -122,6 +136,10 @@ func (m Model) View() string {
 		return m.contactModel.View()
 	case ViewAbout:
 		return AboutView()
+	case ViewArcade:
+		return m.arcadeModel.View()
+	case ViewSecrets:
+		return m.secretsModel.View()
 	default:
 		return ""
 	}
