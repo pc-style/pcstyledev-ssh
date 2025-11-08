@@ -15,18 +15,24 @@ const (
 	ViewHome View = iota
 	ViewContact
 	ViewAbout
+	ViewSnake
+	ViewMatrix
+	ViewHelp
 	ViewExit
 )
 
 // Model is the main application model
 type Model struct {
-	currentView  View
-	homeModel    HomeModel
-	contactModel ContactModel
-	width        int
-	height       int
-	quitting     bool
-	renderer     *lipgloss.Renderer
+	currentView   View
+	homeModel     HomeModel
+	contactModel  ContactModel
+	snakeModel    SnakeGameModel
+	matrixModel   MatrixModel
+	helpModel     HelpEasterEggModel
+	width         int
+	height        int
+	quitting      bool
+	renderer      *lipgloss.Renderer
 }
 
 // NewModel creates a new application model
@@ -37,6 +43,9 @@ func NewModel(apiBaseURL string, renderer *lipgloss.Renderer) Model {
 		currentView:  ViewHome,
 		homeModel:    NewHomeModel(),
 		contactModel: NewContactModel(apiClient),
+		snakeModel:   NewSnakeGameModel(),
+		matrixModel:  NewMatrixModel(),
+		helpModel:    NewHelpEasterEggModel(),
 		renderer:     renderer,
 	}
 
@@ -77,6 +86,24 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 		return m, nil
 
+	case NavigateToGameMsg:
+		// Handle navigation to games/easter eggs
+		switch msg.GameType {
+		case "snake":
+			m.currentView = ViewSnake
+			m.snakeModel = NewSnakeGameModel()
+			return m, m.snakeModel.Init()
+		case "matrix":
+			m.currentView = ViewMatrix
+			m.matrixModel = NewMatrixModel()
+			return m, m.matrixModel.Init()
+		case "help":
+			m.currentView = ViewHelp
+			m.helpModel = NewHelpEasterEggModel()
+			return m, m.helpModel.Init()
+		}
+		return m, nil
+
 	case BackMsg:
 		// Handle back navigation
 		m.currentView = ViewHome
@@ -97,6 +124,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.currentView = ViewHome
 			}
 		}
+	case ViewSnake:
+		m.snakeModel, cmd = m.snakeModel.Update(msg)
+	case ViewMatrix:
+		m.matrixModel, cmd = m.matrixModel.Update(msg)
+	case ViewHelp:
+		m.helpModel, cmd = m.helpModel.Update(msg)
 	case ViewExit:
 		m.quitting = true
 		return m, tea.Quit
@@ -122,6 +155,12 @@ func (m Model) View() string {
 		return m.contactModel.View()
 	case ViewAbout:
 		return AboutView()
+	case ViewSnake:
+		return m.snakeModel.View()
+	case ViewMatrix:
+		return m.matrixModel.View()
+	case ViewHelp:
+		return m.helpModel.View()
 	default:
 		return ""
 	}
